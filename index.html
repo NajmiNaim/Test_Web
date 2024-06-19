@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Confession</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            text-align: center;
+            padding: 50px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+        }
+        p {
+            font-size: 18px;
+            line-height: 1.6;
+        }
+        .button-container {
+            margin-top: 20px;
+        }
+        button {
+            background-color: #ff4500;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+        }
+        button:hover {
+            background-color: #ff6347;
+        }
+        .response {
+            margin-top: 20px;
+            font-size: 18px;
+            line-height: 1.6;
+            color: #333;
+        }
+    </style>
+    <script>
+        let currentQuestion = 'single';
+
+        function handleResponse(response) {
+            const questionContainer = document.getElementById('questionContainer');
+            const responseContainer = document.getElementById('responseContainer');
+            const titleElement = document.getElementById('title');
+
+            if (currentQuestion === 'single') {
+                titleElement.innerHTML = 'Hello, Nur Najmin!';
+                if (response === 'Yes') {
+                    questionContainer.innerHTML = `Nur Najmin, you are really special to me, and I have feelings for you. I hope this doesn't change our friendship, but I just needed to let you know.`;
+                    responseContainer.innerHTML = `
+                        <button onclick="handleResponse('Yes, I feel the same')">I feel the same</button>
+                        <button onclick="handleResponse('No, I see you as a friend')">I see you as a friend</button>
+                    `;
+                    currentQuestion = 'feelings';
+                } else {
+                    responseContainer.innerHTML = `That’s okay, Nur Najmin! I really appreciate your honesty and value our friendship.`;
+                }
+            } else if (currentQuestion === 'feelings') {
+                if (response === 'Yes, I feel the same') {
+                    questionContainer.innerHTML = 'Would you like to go on a date with me?';
+                    responseContainer.innerHTML = `
+                        <button onclick="handleResponse('Yes')">Yes</button>
+                        <button onclick="handleResponse('No')">No</button>
+                    `;
+                    currentQuestion = 'date';
+                } else if (response === 'No, I see you as a friend') {
+                    responseContainer.innerHTML = 'That’s okay! I appreciate your honesty.';
+                    currentQuestion = 'friend';
+                }
+            } else if (currentQuestion === 'date') {
+                if (response === 'Yes') {
+                    questionContainer.innerHTML = 'When are you free to go out?';
+                    responseContainer.innerHTML = `
+                        <input type="text" id="dateInput" placeholder="Enter a date...">
+                        <button onclick="handleDate()">Send</button>
+                    `;
+                    currentQuestion = 'schedule';
+                } else {
+                    responseContainer.innerHTML = 'Maybe another time then.';
+                    currentQuestion = 'friend';
+                }
+            } else if (currentQuestion === 'schedule') {
+                responseContainer.innerHTML = `Looking forward to it! Let's plan something soon.`;
+                currentQuestion = 'end';
+            }
+        }
+
+        function handleDate() {
+            const dateInput = document.getElementById('dateInput').value;
+            const responseContainer = document.getElementById('responseContainer');
+            responseContainer.innerHTML = `Let's meet on "${dateInput}". Looking forward to it!`;
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1 id="title">My Confession</h1>
+        <div id="content">
+            <p id="questionContainer">Are you single?</p>
+            <div id="responseContainer" class="response">
+                <button onclick="handleResponse('Yes')">Yes</button>
+                <button onclick="handleResponse('No')">No</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
